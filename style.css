@@ -463,7 +463,7 @@ h4{
  }
  .portfolio_img img {
     border-radius: 5%;
-    height: 100%; 
+    height: fit-content; 
     max-width: 450px;
     justify-content: center;
 }
