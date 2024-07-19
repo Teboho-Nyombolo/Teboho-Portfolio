@@ -637,15 +637,11 @@ h4{
     }
     .about_container{
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        align-items: center;
-        height: 100%;
-        align-items: center;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-gap: 40px;
+        margin-top: 50px;
+        overflow-x: hidden;
         padding: 80px 10%;
-        justify-items: center;
-        row-gap: 2rem;
-        text-align:center;
-        overflow: hidden;
     }
     .about_img img{
         width: 100%;
