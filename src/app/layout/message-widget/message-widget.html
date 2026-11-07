@@ -1,0 +1,79 @@
+@if (message.open()) {
+  <section
+    aria-label="Send me a message"
+    class="fixed right-4 bottom-4 z-50 w-[min(360px,calc(100vw-2rem))] overflow-hidden rounded-xl border border-black/10 bg-white shadow-2xl dark:border-white/10 dark:bg-panel"
+  >
+    <header class="flex items-center justify-between bg-zinc-100 px-4 py-2.5 dark:bg-white/5">
+      <h3 class="text-xs font-semibold">Send Me a Message</h3>
+      <div class="flex items-center gap-1 text-base">
+        <button
+          type="button"
+          (click)="message.toggleMinimized()"
+          [attr.aria-label]="message.minimized() ? 'Expand' : 'Minimise'"
+          class="grid size-7 cursor-pointer place-items-center rounded-md hover:bg-black/5 dark:hover:bg-white/10"
+        >
+          <ion-icon [attr.name]="message.minimized() ? 'chevron-up-outline' : 'remove-outline'"></ion-icon>
+        </button>
+        <button
+          type="button"
+          (click)="message.close()"
+          aria-label="Close"
+          class="grid size-7 cursor-pointer place-items-center rounded-md hover:bg-black/5 dark:hover:bg-white/10"
+        >
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+    </header>
+
+    @if (!message.minimized()) {
+      <form (submit)="send($event)" novalidate class="flex flex-col gap-5 px-5 pt-5 pb-5">
+        <label class="flex flex-col gap-1.5">
+          <span class="font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-500">Full name</span>
+          <input
+            [value]="name()"
+            (input)="name.set(read($event))"
+            autocomplete="name"
+            placeholder="Your full name"
+            class="border-b border-black/10 bg-transparent pb-2 text-sm outline-none focus:border-current dark:border-white/15"
+          />
+          @if (submitted() && !name().trim()) {
+            <span class="text-xs text-red-600 dark:text-red-400">Please enter your name.</span>
+          }
+        </label>
+        <label class="flex flex-col gap-1.5">
+          <span class="font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-500">Email address</span>
+          <input
+            type="email"
+            [value]="from()"
+            (input)="from.set(read($event))"
+            autocomplete="email"
+            placeholder="your.email@example.com"
+            class="border-b border-black/10 bg-transparent pb-2 text-sm outline-none focus:border-current dark:border-white/15"
+          />
+          @if (submitted() && !fromValid()) {
+            <span class="text-xs text-red-600 dark:text-red-400">Please enter a valid email address.</span>
+          }
+        </label>
+        <label class="flex flex-col gap-1.5">
+          <span class="font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-500">Message</span>
+          <textarea
+            rows="5"
+            [value]="body()"
+            (input)="body.set(read($event))"
+            placeholder="Tell me about your project..."
+            class="resize-none border-b border-black/10 bg-transparent pb-2 text-sm outline-none focus:border-current dark:border-white/15"
+          ></textarea>
+          @if (submitted() && !body().trim()) {
+            <span class="text-xs text-red-600 dark:text-red-400">Please write a message.</span>
+          }
+        </label>
+        <button
+          type="submit"
+          class="self-start cursor-pointer rounded-full bg-zinc-950 px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white dark:bg-white dark:text-zinc-950"
+        >
+          Send Message &rarr;
+        </button>
+      </form>
+    }
+  </section>
+}
