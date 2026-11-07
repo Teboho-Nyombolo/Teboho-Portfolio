@@ -1,0 +1,73 @@
+<header class="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
+  <nav
+    aria-label="Main"
+    class="pointer-events-auto relative flex w-full max-w-[1100px] items-center justify-between gap-6 rounded-2xl border border-black/5 bg-white/85 px-4 py-3 shadow-[0_6px_30px_rgba(0,0,0,0.08)] backdrop-blur-md transition-colors dark:border-white/10 dark:bg-[#15171d]/85"
+  >
+    <button type="button" (click)="goHome()" class="flex cursor-pointer items-center gap-3.5">
+      <span
+        class="grid size-10 place-items-center rounded-[11px] bg-zinc-950 text-[19px] leading-none font-extrabold tracking-tight text-white pt-px dark:bg-white dark:text-zinc-950"
+        >{{ initial }}</span
+      >
+      <span class="text-sm font-bold uppercase tracking-[0.28em]">{{ profile.firstName }}</span>
+    </button>
+
+    <ul
+      class="absolute inset-x-0 top-[calc(100%+10px)] flex-col items-center gap-5 rounded-2xl border border-black/5 bg-white/95 px-4 py-7 shadow-[0_6px_30px_rgba(0,0,0,0.08)] backdrop-blur-md xl:static xl:flex xl:flex-row xl:gap-7 xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none xl:backdrop-blur-none dark:border-white/10 dark:bg-[#15171d]/95 xl:dark:bg-transparent"
+      [class.flex]="menuOpen()"
+      [class.hidden]="!menuOpen()"
+    >
+      @for (link of links(); track link.target) {
+        <li>
+          <button
+            type="button"
+            (click)="go(link)"
+            class="cursor-pointer border-b pb-1 text-xs font-medium whitespace-nowrap uppercase tracking-[0.18em] transition-colors"
+            [class]="
+              nav.active() === link.target
+                ? 'border-current text-zinc-950 dark:text-white'
+                : 'border-transparent text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
+            "
+          >
+            {{ link.label }}
+          </button>
+        </li>
+      }
+      <li class="xl:hidden">
+        <button
+          type="button"
+          (click)="hireMe()"
+          class="cursor-pointer rounded-xl border-[1.5px] border-current px-7 py-2.5 text-sm font-bold"
+        >
+          Hire Me
+        </button>
+      </li>
+    </ul>
+
+    <div class="flex items-center gap-3">
+      <button
+        type="button"
+        (click)="theme.toggle()"
+        [attr.aria-label]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+        class="grid size-10 cursor-pointer place-items-center rounded-full bg-black/5 text-lg dark:bg-white/10"
+      >
+        <ion-icon [attr.name]="theme.isDark() ? 'moon-outline' : 'sunny-outline'"></ion-icon>
+      </button>
+      <button
+        type="button"
+        (click)="hireMe()"
+        class="hidden cursor-pointer rounded-xl border-[1.5px] border-zinc-950 px-6 py-2.5 whitespace-nowrap text-sm font-bold transition-colors hover:bg-zinc-950 hover:text-white xl:block dark:border-white dark:hover:bg-white dark:hover:text-zinc-950"
+      >
+        Hire Me
+      </button>
+      <button
+        type="button"
+        (click)="menuOpen.set(!menuOpen())"
+        aria-label="Menu"
+        [attr.aria-expanded]="menuOpen()"
+        class="grid size-10 cursor-pointer place-items-center text-2xl xl:hidden"
+      >
+        <ion-icon [attr.name]="menuOpen() ? 'close-outline' : 'menu-outline'"></ion-icon>
+      </button>
+    </div>
+  </nav>
+</header>
